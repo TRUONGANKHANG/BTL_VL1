@@ -9,7 +9,7 @@ import streamlit as st
 from magnetic_field import field_at_points, axis_field, center_field
 
 st.set_page_config(page_title="Biot-Savart | PH1003", page_icon="🧲", layout="wide")
-st.title("🧲 Từ trường của dòng điện tròn")
+st.title("Từ trường của dòng điện tròn")
 st.caption("BTL Vật lý 1 (PH1003) · Định luật Biot–Savart · Phương pháp điểm giữa")
 st.markdown("Mô hình: vòng dây mảnh nằm trong mặt phẳng **Oxy**, tâm tại **O**. Dòng điện **I > 0** chạy ngược chiều kim đồng hồ khi nhìn từ **+Oz**; từ trường tại tâm hướng **+Oz**.")
 
