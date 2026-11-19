@@ -1,12 +1,15 @@
 """Interactive PH1003 Biot-Savart circular loop simulation."""
 import io
+
+import matplotlib
 import numpy as np
 import pandas as pd
-import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import streamlit as st
-from magnetic_field import field_at_points, axis_field, center_field
+import streamlit.components.v1 as components
+from magnetic_field import axis_field, center_field, field_at_points
 
 st.set_page_config(page_title="Biot-Savart | PH1003", page_icon="🧲", layout="wide")
 st.title("Từ trường của dòng điện tròn")
@@ -47,8 +50,12 @@ col1.metric("B tại tâm (lý thuyết)", f"{abs(center_field(R, I))*1e6:.3f} �
 col2.metric("Số đoạn chia", f"{N:,}")
 col3.metric("Số điểm lưới", f"{density*density:,}")
 
-plot_tab, compare_tab, data_tab = st.tabs(["Trường vectơ & đường sức", "Kiểm chứng & hội tụ", "Điểm khảo sát & CSV"])
-
+plot_tab, compare_tab, data_tab, slide_tab = st.tabs([
+    "Trường vectơ & đường sức",
+    "Kiểm chứng & hội tụ",
+    "Điểm khảo sát & CSV",
+    "📽️ Slide thuyết trình"
+])
 with plot_tab:
     left, right = st.columns(2)
     with left:
@@ -136,4 +143,27 @@ with data_tab:
     st.download_button("⬇️ Tải CSV", table.to_csv(index=False).encode("utf-8-sig"), file_name="biot_savart_field.csv", mime="text/csv")
 
 st.divider()
+# ======================================
+# TAB 4: SLIDE THUYẾT TRÌNH CANVA
+# ======================================
+
+with slide_tab:
+    st.header("📽️ Bài thuyết trình Biot–Savart")
+
+    st.markdown("""
+    **BTL Vật lý 1 – PH1003**
+
+    Nội dung:
+    - Cơ sở lý thuyết
+    - Định luật Biot–Savart
+    - Phương pháp tính số
+    - Kết quả mô phỏng
+    - Nhận xét và kết luận
+    """)
+
+    components.iframe(
+        "LINK_NHÚNG_CANVA",
+        height=700,
+        scrolling=True
+    )
 st.caption("Mô phỏng mang tính học thuật: dòng điện không đổi, vòng dây mảnh lý tưởng, môi trường chân không, μ₀ ≈ 4π·10⁻⁷ H/m.")
