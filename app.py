@@ -147,23 +147,19 @@ st.divider()
 # TAB 4: SLIDE THUYẾT TRÌNH CANVA
 # ======================================
 
+
 with slide_tab:
     st.header("📽️ Bài thuyết trình Biot–Savart")
 
-    st.markdown("""
-    **BTL Vật lý 1 – PH1003**
-
-    Nội dung:
-    - Cơ sở lý thuyết
-    - Định luật Biot–Savart
-    - Phương pháp tính số
-    - Kết quả mô phỏng
-    - Nhận xét và kết luận
-    """)
-
     components.iframe(
-        "https://canva.link/4bb607nl9vy5ft8",
+        "https://www.canva.com/design/DAHbXR7VKMY/GTpjROvqaeGZ6KRP6qwigg/view?embed",
         height=700,
         scrolling=True
     )
+
+    st.markdown(
+        "[🔗 Mở slide Canva trong tab mới]"
+        "(https://www.canva.com/design/DAHbXR7VKMY/GTpjROvqaeGZ6KRP6qwigg/view)"
+    )
+
 st.caption("Mô phỏng mang tính học thuật: dòng điện không đổi, vòng dây mảnh lý tưởng, môi trường chân không, μ₀ ≈ 4π·10⁻⁷ H/m.")
