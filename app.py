@@ -6,7 +6,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import streamlit as st
-from BTL_VL1.magnetic_field import field_at_points, axis_field, center_field
+from magnetic_field import field_at_points, axis_field, center_field
 
 st.set_page_config(page_title="Biot-Savart | PH1003", page_icon="🧲", layout="wide")
 st.title("🧲 Từ trường của dòng điện tròn")
