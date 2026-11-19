@@ -162,7 +162,7 @@ with slide_tab:
     """)
 
     components.iframe(
-        "LINK_NHÚNG_CANVA",
+        "https://canva.link/4bb607nl9vy5ft8",
         height=700,
         scrolling=True
     )
