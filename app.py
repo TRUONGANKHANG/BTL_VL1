@@ -74,7 +74,7 @@ with plot_tab:
         bz_mask = np.ma.masked_invalid(np.where(strong, Bz, np.nan))
         if np.any(np.isfinite(Bx)) and abs(I) > 1e-15:
             try:
-                ax.streamplot(x, z, bx_mask, bz_mask, density=1.3, linewidth=1.0, arrowsize=1.0, color="tab:teal")
+                ax.streamplot(x, z, bx_mask, bz_mask, density=1.3, linewidth=1.0, arrowsize=1.0, color="teal")
             except (ValueError, TypeError):
                 st.warning("Không đủ dữ liệu hợp lệ để vẽ đường sức với lưới hiện tại. Hãy thử tăng độ phân giải.")
         else:
