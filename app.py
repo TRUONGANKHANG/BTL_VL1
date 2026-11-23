@@ -6,6 +6,9 @@ import numpy as np
 import pandas as pd
 
 matplotlib.use("Agg")
+import inspect
+
+import magnetic_field
 import matplotlib.pyplot as plt
 import streamlit as st
 import streamlit.components.v1 as components
@@ -50,11 +53,12 @@ col1.metric("B tại tâm (lý thuyết)", f"{abs(center_field(R, I))*1e6:.3f} �
 col2.metric("Số đoạn chia", f"{N:,}")
 col3.metric("Số điểm lưới", f"{density*density:,}")
 
-plot_tab, compare_tab, data_tab, slide_tab = st.tabs([
+plot_tab, compare_tab, data_tab, code_tab, slide_tab = st.tabs([
     "Trường vectơ & đường sức",
     "Kiểm chứng & hội tụ",
     "Điểm khảo sát & CSV",
-    "📽️ Slide thuyết trình"
+    "Mã nguồn & giải thích",
+    "Slide thuyết trình"
 ])
 with plot_tab:
     left, right = st.columns(2)
@@ -141,6 +145,65 @@ with data_tab:
     table = pd.DataFrame({"x_m":X.ravel(), "y_m":np.zeros(X.size), "z_m":Z.ravel(), "Bx_T":field[...,0].ravel(), "By_T":field[...,1].ravel(), "Bz_T":field[...,2].ravel(), "B_T":Bm.ravel()})
     st.dataframe(table.head(20), hide_index=True, use_container_width=True)
     st.download_button("⬇️ Tải CSV", table.to_csv(index=False).encode("utf-8-sig"), file_name="biot_savart_field.csv", mime="text/csv")
+
+
+# TAB: MÃ NGUỒN VÀ GIẢI THÍCH
+with code_tab:
+    st.header("📘 Mã nguồn thuật toán Biot–Savart")
+    st.write(
+        "Các hàm tính toán chính được sử dụng "
+        "trong chương trình mô phỏng."
+    )
+
+    sections = [
+        (
+            "1. Chia vòng dây thành N phần tử",
+            magnetic_field.create_segments,
+            """
+            **Chức năng:**
+            - Chia vòng dây thành N phần tử bằng nhau.
+            - Tính góc chia Δθ = 2π/N.
+            - Xác định tọa độ điểm giữa mỗi phần tử.
+            - Xác định vectơ chiều dài Δl của phần tử dây.
+            """
+        ),
+        (
+            "2. Tính vectơ cảm ứng từ",
+            magnetic_field.field_at_points,
+            """
+            **Chức năng:**
+            - Xác định vectơ từ phần tử dây đến điểm khảo sát.
+            - Tính tích có hướng Δl × r.
+            - Áp dụng định luật Biot–Savart.
+            - Cộng các đóng góp từ trường để tìm B tổng hợp.
+            """
+        ),
+        (
+            "3. Tính từ trường tại tâm vòng dây",
+            magnetic_field.center_field,
+            """
+            **Chức năng:**
+            - Tính cảm ứng từ tại tâm theo công thức lý thuyết.
+            - Công thức: B = μ₀I/(2R).
+            - Dùng để kiểm chứng kết quả mô phỏng.
+            """
+        ),
+        (
+            "4. Tính từ trường trên trục Oz",
+            magnetic_field.axis_field,
+            """
+            **Chức năng:**
+            - Tính cảm ứng từ tại các điểm trên trục Oz.
+            - Công thức: Bz = μ₀IR²/[2(R²+z²)^(3/2)].
+            - So sánh kết quả lý thuyết với tính số.
+            """
+        )
+    ]
+
+    for title, function, explanation in sections:
+        with st.expander(title):
+            st.markdown(explanation)
+            st.code(inspect.getsource(function), language="python")
 
 st.divider()
 # ======================================
